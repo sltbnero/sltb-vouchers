@@ -182,7 +182,7 @@ body>footer.ft{margin-top:auto;flex-shrink:0}
 .sig{display:flex;gap:16px;margin:80px 0 20px;break-inside:avoid;page-break-inside:avoid}.sig>div{flex:1 1 0;min-width:0;text-align:center;line-height:1.6;font-size:14px;overflow-wrap:anywhere}
 .pb{break-before:page}
 @page{size:A4;margin:12mm}
-@media print{html,body.pp{width:auto!important;min-width:0!important;overflow:visible!important}.paper{width:100%!important;max-width:100%!important;overflow:visible!important}body.pp .wrap,body.pp .ft,body.pp .md{display:none!important}body.pp #pr{display:block}body.pp{background:#fff}.paper{border:0;padding:0;margin:0}}
+@media print{html,body.pp{width:auto!important;min-width:0!important;overflow:visible!important}.paper{width:100%!important;max-width:100%!important;overflow:visible!important}body.pp .wrap,body.pp .ft,body.pp .md{display:none!important}body.pp #pr{display:block}body.pp{background:#fff}.paper{border:0;padding:0 3px 0 3px;margin:0;box-sizing:border-box}.lt{width:calc(100% - 3px)!important;margin-left:1px!important;margin-right:2px!important}}
 </style>
 </head>
 <body>
@@ -230,6 +230,7 @@ body>footer.ft{margin-top:auto;flex-shrink:0}
 <div id="pr"></div>
 <div id="md" class="md" style="display:none"><div class="mb"><div id="mt"></div><div class="bar"><button class="p" id="mok">හරි</button><button id="mcn">අවලංගුයි</button></div></div></div>
 <footer class="ft"><div class="ftl"></div><div class="ft1">Developed by<br><b>Jeewan Madhusanka Kariyawasam</b></div><div class="ft2">© <span id="fy"></span> · All Rights Reserved</div></footer>
+<div id="instw" style="display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(112px + env(safe-area-inset-bottom,0px));z-index:50;text-align:center;max-width:92%;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,.25)"><button type="button" id="instb" class="p">📲 ඇප් එක Install කරන්න</button><span id="insth" class="mut" style="display:none"></span></div>
 <script>
 const D=["ගම්පොළ","නාවලපිටිය","හැටන්","නුවරඑළිය","කොත්මලේ","හඟුරන්කෙත","වලපනේ"];
 const K=[["ගම්පො"],["නාවල"],["හැටන්"],["නුවරඑළිය"],["කොත්ම"],["හඟුරන්","හගුරන්"],["වලපන"]];
@@ -444,11 +445,11 @@ function plist(title,rows){
  flat.forEach(x=>{if(cur.length>=cap){pg.push(cur);cur=[];cap=34}cur.push(x)});pg.push(cur);
  const capL=(pg.length==1?28:34)-11,last=pg[pg.length-1];if(last.length>capL)pg.push(last.splice(capL));
  const dn=D[S.depot]+" ඩිපෝව",ym=S.y+" "+MO[S.m];
- const head='<thead><tr><th>අ.අ.</th><th>ඩිපෝව</th><th>වර්ෂය / මාසය</th><th>වවුචර්පත් අංකය</th><th>වටිනාකම</th></tr></thead>';
+ const head='<thead><tr><th>අ.අ.</th><th>වර්ෂය / මාසය</th><th>වවුචර්පත් අංකය</th><th>වටිනාකම</th></tr></thead>';
  const sig='<div class="sig"><div>සහකාර මුදල් කළමණාකාර<br>'+dn+'</div><div>ඩිපෝ කළමණාකාර<br>'+dn+'</div></div>';
  return pg.map((c,k)=>{const isL=k===pg.length-1;
-  const body=c.map((x,m)=>`<tr><td>${x.n}</td>${m===0?`<td rowspan="${c.length}" class="nw">${dn}</td><td rowspan="${c.length}" class="nw">${ym}</td>`:""}<td>${x.none?"නැත":esc(x.v)}</td><td class="am">${x.none?"නැත":fa(x.a)}</td></tr>`).join("");
-  return`<div class="paper pb">${k===0?`<h3 style="text-align:center">${title}</h3><p style="text-align:center">${ym}</p><p>ප්‍රාදේශිකය - ශ්‍රී ලංගම නුවරඑළිය ප්‍රාදේශිකය</p>`:`<p style="text-align:center;font-size:12px">${title} - ${dn} - ${ym} (පිටුව ${k+1})</p>`}<table class="lt"><colgroup><col style="width:8%"><col style="width:19%"><col style="width:24%"><col style="width:28%"><col style="width:21%"></colgroup>${head}<tbody>${body}${isL?`<tr class="t"><td colspan="4">මුළු එකතුව</td><td class="am">${fa(T)}</td></tr>`:""}</tbody></table>${isL?sig:""}</div>`}).join("");
+  const body=c.map((x,m)=>`<tr><td>${x.n}</td>${m===0?`<td rowspan="${c.length}" class="nw">${ym}</td>`:""}<td>${x.none?"නැත":esc(x.v)}</td><td class="am">${x.none?"නැත":fa(x.a)}</td></tr>`).join("");
+  return`<div class="paper pb">${k===0?`<h3 style="text-align:center">${title}</h3><p style="text-align:center">${ym}</p><p>ඩිපෝව - ${D[S.depot]}</p>`:`<p style="text-align:center;font-size:12px">${title} - ${dn} - ${ym} (පිටුව ${k+1})</p>`}<table class="lt"><colgroup><col style="width:10%"><col style="width:35%"><col style="width:25%"><col style="width:30%"></colgroup>${head}<tbody>${body}${isL?`<tr class="t"><td colspan="3">මුළු එකතුව</td><td class="am">${fa(T)}</td></tr>`:""}</tbody></table>${isL?sig:""}</div>`}).join("");
 }
 function ppol(){
  const order=[];S.pol.forEach(x=>{if(!order.includes(x.d))order.push(x.d)});
@@ -458,7 +459,7 @@ function ppol(){
  const pg=[];let cur=[],cap=28;
  flat.forEach(x=>{if(cur.length>=cap){pg.push(cur);cur=[];cap=34}cur.push(x)});pg.push(cur);
  const capL=(pg.length==1?28:34)-11,last=pg[pg.length-1];if(last.length>capL)pg.push(last.splice(capL));
- const ttl="පොලිස් වවුචර්පත් බිල්පත් අකෘති පත්‍රය - "+S.y+" වර්ෂය";
+ const ttl="පොලිස් වවුචර්පත් බිල්පත් - "+S.y+" වර්ෂය";
  const head='<thead><tr><th>අනු අංකය</th><th>පොලිස් කොට්ඨාශය</th><th>වර්ෂය / මාසය</th><th>වවුචර්පත් අංකය</th><th>වටිනාකම</th></tr></thead>';
  const dn3="ශ්‍රී ලංගම "+D[S.depot]+" ඩිපෝව",sig=`<div class="sig"><div>සහකාර මුදල් කළමණාකාර<br>${dn3}</div><div>ඩිපෝ කළමණාකාර<br>${dn3}</div><div>ප්‍රාදේශිය මුදල් කළමණාකාර<br>ශ්‍රී ලංගම නුවරඑළිය ප්‍රාදේශිකය</div></div>`;
  return pg.map((c,k)=>{const isL=k===pg.length-1;
@@ -486,32 +487,32 @@ async function xl(only){
   const merge=(ws,r,c1,c2)=>{if(c2>c1)ws.mergeCells(r,c1,r,c2)};
   const lst=(name,title,rows)=>{
    const w=wb.addWorksheet(name,{views:[{showGridLines:false}]});
-   w.columns=[{width:14},{width:26},{width:22},{width:22},{width:18}];
-   let q=0;const H=(t,o)=>{q++;cell(w,q,1,t,o);merge(w,q,1,5)};
-   H(title,{b:true,h:"center",size:15});w.getRow(1).height=24;H(ym+" - "+dn,{h:"center"});w.getRow(2).height=18;
+   w.columns=[{width:14},{width:32},{width:22},{width:24}];
+   let q=0;const H=(t,o)=>{q++;cell(w,q,1,t,o);merge(w,q,1,4)};
+   H(title,{b:true,h:"center",size:15});w.getRow(1).height=24;H(ym,{h:"center"});w.getRow(2).height=18;H("ඩිපෝව - "+D[S.depot],{h:"center"});w.getRow(3).height=18;
    q++;w.getRow(q).height=10;q++;const hr=q;w.getRow(q).height=26;
-   ["අ.අ.","ඩිපෝව","වර්ෂය / මාසය","වවුචර්පත් අංකය","වටිනාකම"].forEach((t,i)=>cell(w,q,i+1,t,{b:true,h:"center",box:true,fill:true}));
-   const PH=720,RH=21;let used=24+18+10+26,T=0,top=0;
-   const close=()=>{if(top&&q>top){w.mergeCells(top,2,q,2);w.mergeCells(top,3,q,3)}top=0};
+   ["අ.අ.","වර්ෂය / මාසය","වවුචර්පත් අංකය","වටිනාකම"].forEach((t,i)=>cell(w,q,i+1,t,{b:true,h:"center",box:true,fill:true}));
+   const PH=720,RH=21;let used=24+18+18+10+26,T=0,top=0;
+   const close=()=>{if(top&&q>top){w.mergeCells(top,2,q,2)}top=0};
    (rows.length?rows:[null]).forEach((x,j)=>{
     const brk=used+RH>PH&&used>26+RH;
     if(brk){close();w.getRow(q).addPageBreak();used=26}
     q++;used+=RH;w.getRow(q).height=21;
     cell(w,q,1,j+1,{h:"center",box:true});
-    if(j===0||brk){cell(w,q,2,dn,{h:"center",box:true});cell(w,q,3,ym,{h:"center",box:true});top=q}
-    if(x){T+=+x.a||0;cell(w,q,4,String(x.v),{h:"center",box:true});cell(w,q,5,r2(x.a),{h:"right",ind:2,box:true,nf:NF2})}
-    else{cell(w,q,4,"නැත",{h:"center",box:true});cell(w,q,5,"නැත",{h:"center",box:true})}
+    if(j===0||brk){cell(w,q,2,ym,{h:"center",box:true});top=q}
+    if(x){T+=+x.a||0;cell(w,q,3,String(x.v),{h:"center",box:true});cell(w,q,4,r2(x.a),{h:"right",ind:2,box:true,nf:NF2})}
+    else{cell(w,q,3,"නැත",{h:"center",box:true});cell(w,q,4,"නැත",{h:"center",box:true})}
    });
    close();
    if(used+150>PH)w.getRow(q).addPageBreak();
    q++;w.getRow(q).height=24;
-   for(let c=1;c<=5;c++)cell(w,q,c,undefined,{b:true,box:true,fill:true});
-   cell(w,q,1,"මුළු එකතුව",{b:true,h:"center",box:true,fill:true});merge(w,q,1,4);cell(w,q,5,r2(T),{b:true,h:"right",ind:2,box:true,fill:true,nf:NF2});
+   for(let c=1;c<=4;c++)cell(w,q,c,undefined,{b:true,box:true,fill:true});
+   cell(w,q,1,"මුළු එකතුව",{b:true,h:"center",box:true,fill:true});merge(w,q,1,3);cell(w,q,4,r2(T),{b:true,h:"right",ind:2,box:true,fill:true,nf:NF2});
    q+=3;w.getRow(q).height=30;
-   merge(w,q,1,2);merge(w,q,4,5);
-   q++;cell(w,q,1,"සහකාර මුදල් කළමණාකාර",{b:true,h:"center"});merge(w,q,1,2);cell(w,q,4,"ඩිපෝ කළමණාකාර",{b:true,h:"center"});merge(w,q,4,5);
-   q++;cell(w,q,1,D[S.depot]+" ඩිපෝව",{b:true,h:"center"});merge(w,q,1,2);cell(w,q,4,D[S.depot]+" ඩිපෝව",{b:true,h:"center"});merge(w,q,4,5);
-   w.pageSetup={paperSize:9,orientation:"portrait",scale:85,printArea:"A1:E"+q,horizontalCentered:true,margins:{left:.6,right:.6,top:.6,bottom:.6,header:.3,footer:.3},printTitlesRow:hr+":"+hr};
+   merge(w,q,1,2);merge(w,q,3,4);
+   q++;cell(w,q,1,"සහකාර මුදල් කළමණාකාර",{b:true,h:"center"});merge(w,q,1,2);cell(w,q,3,"ඩිපෝ කළමණාකාර",{b:true,h:"center"});merge(w,q,3,4);
+   q++;cell(w,q,1,D[S.depot]+" ඩිපෝව",{b:true,h:"center"});merge(w,q,1,2);cell(w,q,3,D[S.depot]+" ඩිපෝව",{b:true,h:"center"});merge(w,q,3,4);
+   w.pageSetup={paperSize:9,orientation:"portrait",scale:85,printArea:"A1:D"+q,horizontalCentered:true,margins:{left:.6,right:.6,top:.6,bottom:.6,header:.3,footer:.3},printTitlesRow:hr+":"+hr};
   };
   if(only!=="air")lst("යුධ ලැයිස්තුව","යුධ හමුදා වවුචර් බිල්පත් සාරාංශය",S.army);
   if(only!=="army")lst("ගුවන් ලැයිස්තුව","ගුවන් හමුදා වවුචර් බිල්පත් සාරාංශය",S.air);
@@ -535,7 +536,7 @@ async function xlPol(){
   const T=r2(rows.reduce((t,x)=>t+(+x.a||0),0));
   const cell=(w,r,c,v,o={})=>{const x=w.getCell(r,c);if(v!==undefined)x.value=v;x.font={name:FN,size:o.size||13,bold:!!o.b};x.alignment={horizontal:o.h||"left",vertical:"middle",wrapText:true,indent:o.ind||0};if(o.box)x.border={top:BD,left:BD,bottom:BD,right:BD};if(o.fill)x.fill=GR;if(o.nf)x.numFmt=o.nf;return x};
   const merge=(w,r,c1,c2)=>{if(c2>c1)w.mergeCells(r,c1,r,c2)};
-  const ttl="පොලිස් වවුචර්පත් බිල්පත් අකෘති පත්‍රය - "+S.y+" වර්ෂය";
+  const ttl="පොලිස් වවුචර්පත් බිල්පත් - "+S.y+" වර්ෂය";
   const mg={left:.6,right:.6,top:.6,bottom:.6,header:.3,footer:.3};
   /* මාස 12ම - එක් මාසයකට පත්‍රයක් බැගින් */
   const monthRows=m=>{let src;if(m===S.m)src=S.pol;else{let o=null;try{o=JSON.parse(lsg(mk(S.depot,S.y,m)))}catch(e){}src=nP((o||{}).pol)}
@@ -723,6 +724,16 @@ function restoreDraft(){
    $("ok_"+k).textContent="↩ ඇතුලත් කර නොතිබූ වවුචර් ආපසු ගත්තා. \"ඇතුලත් කරන්න\" බොත්තම ඔබන්න."}
  }catch(e){}
 }
+(function(){try{
+ var w=document.getElementById("instw"),b=document.getElementById("instb"),h=document.getElementById("insth"),dp=null;
+ var std=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+ if(std||!w)return;
+ var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+ window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;w.style.display="";b.style.display=""});
+ window.addEventListener("appinstalled",function(){w.style.display="none";dp=null});
+ b.addEventListener("click",function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;w.style.display="none"}).catch(function(){})});
+ if(ios){b.style.display="none";h.style.display="";h.textContent="iPhone: Safari හි Share බොත්තම → \"Add to Home Screen\" ඔබන්න.";w.style.display=""}
+}catch(e){}})();
 try{if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}
 form("army","fa");form("air","fb");form("pol","fc");show();$("abdl").checked=abDl();abInit();restoreDraft();DRAFT_ON=true;$("fy").textContent=nd.getFullYear();tabLabel("army");
 </script>
