@@ -476,6 +476,14 @@ function prt(w){
 }
 
 /* Excel */
+function xfont(x,size,b){
+ var T="Times New Roman",F="Iskoola Pota",v=x.value;
+ if(typeof v==="number"){x.font={name:T,size:size,bold:b};return}
+ if(typeof v==="string"&&/\d/.test(v)){
+  if(!/[^\x00-\x7F]/.test(v)){x.font={name:T,size:size,bold:b};return}
+  x.value={richText:v.split(/(\d+)/).filter(function(t){return t!==""}).map(function(t){return{font:{name:/^\d/.test(t)?T:F,size:size,bold:b},text:t}})};
+ }
+}
 async function xl(only){
  if(typeof ExcelJS==="undefined"){note("Excel පුස්තකාලය පූරණය නොවීය (අන්තර්ජාලය අවශ්‍යයි).");return}
  try{
@@ -483,7 +491,7 @@ async function xl(only){
   const NF2='#,##0.00;-#,##0.00;"-"';
   const wb=new ExcelJS.Workbook();wb.creator="ශ්‍රී ලංගම නුවරඑළිය";
   const ym=S.y+" "+MO[S.m],dn=D[S.depot]+" ඩිපෝව";
-  const cell=(ws,r,c,v,o={})=>{const x=ws.getCell(r,c);if(v!==undefined)x.value=v;x.font={name:FN,size:o.size||13,bold:!!o.b};x.alignment={horizontal:o.h||"left",vertical:"middle",wrapText:true,indent:o.ind||0};if(o.box)x.border={top:BD,left:BD,bottom:BD,right:BD};if(o.fill)x.fill=GR;if(o.nf)x.numFmt=o.nf;return x};
+  const cell=(ws,r,c,v,o={})=>{const x=ws.getCell(r,c);if(v!==undefined)x.value=v;x.font={name:FN,size:o.size||13,bold:!!o.b};xfont(x,o.size||13,!!o.b);x.alignment={horizontal:o.h||"left",vertical:"middle",wrapText:true,indent:o.ind||0};if(o.box)x.border={top:BD,left:BD,bottom:BD,right:BD};if(o.fill)x.fill=GR;if(o.nf)x.numFmt=o.nf;return x};
   const merge=(ws,r,c1,c2)=>{if(c2>c1)ws.mergeCells(r,c1,r,c2)};
   const lst=(name,title,rows)=>{
    const w=wb.addWorksheet(name,{views:[{showGridLines:false}]});
@@ -534,7 +542,7 @@ async function xlPol(){
   const order=[];S.pol.forEach(x=>{if(!order.includes(x.d))order.push(x.d)});
   const rows=[];order.forEach(d=>S.pol.forEach(x=>{if(x.d===d)rows.push(x)}));
   const T=r2(rows.reduce((t,x)=>t+(+x.a||0),0));
-  const cell=(w,r,c,v,o={})=>{const x=w.getCell(r,c);if(v!==undefined)x.value=v;x.font={name:FN,size:o.size||13,bold:!!o.b};x.alignment={horizontal:o.h||"left",vertical:"middle",wrapText:true,indent:o.ind||0};if(o.box)x.border={top:BD,left:BD,bottom:BD,right:BD};if(o.fill)x.fill=GR;if(o.nf)x.numFmt=o.nf;return x};
+  const cell=(w,r,c,v,o={})=>{const x=w.getCell(r,c);if(v!==undefined)x.value=v;x.font={name:FN,size:o.size||13,bold:!!o.b};xfont(x,o.size||13,!!o.b);x.alignment={horizontal:o.h||"left",vertical:"middle",wrapText:true,indent:o.ind||0};if(o.box)x.border={top:BD,left:BD,bottom:BD,right:BD};if(o.fill)x.fill=GR;if(o.nf)x.numFmt=o.nf;return x};
   const merge=(w,r,c1,c2)=>{if(c2>c1)w.mergeCells(r,c1,r,c2)};
   const ttl="පොලිස් වවුචර්පත් බිල්පත් - "+S.y+" වර්ෂය";
   const mg={left:.6,right:.6,top:.6,bottom:.6,header:.3,footer:.3};
