@@ -489,7 +489,7 @@ async function xl(only){
    const w=wb.addWorksheet(name,{views:[{showGridLines:false}]});
    w.columns=[{width:14},{width:32},{width:22},{width:24}];
    let q=0;const H=(t,o)=>{q++;cell(w,q,1,t,o);merge(w,q,1,4)};
-   H(title,{b:true,h:"center",size:15});w.getRow(1).height=24;H(ym,{h:"center"});w.getRow(2).height=18;H("ඩිපෝව - "+D[S.depot],{h:"center"});w.getRow(3).height=18;
+   H(title,{b:true,h:"center",size:15});w.getRow(1).height=24;H(ym,{h:"center"});w.getRow(2).height=18;H("ඩිපෝව - "+D[S.depot],{h:"left"});w.getRow(3).height=18;
    q++;w.getRow(q).height=10;q++;const hr=q;w.getRow(q).height=26;
    ["අ.අ.","වර්ෂය / මාසය","වවුචර්පත් අංකය","වටිනාකම"].forEach((t,i)=>cell(w,q,i+1,t,{b:true,h:"center",box:true,fill:true}));
    const PH=720,RH=21;let used=24+18+18+10+26,T=0,top=0;
